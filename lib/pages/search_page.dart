@@ -4,12 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../models/weather_model.dart';
 
-import '../services/weather_service.dart';
 
 class SearchPage extends StatelessWidget {
-  String? cityName;
-  SearchPage({this.updateUi});
-  VoidCallback? updateUi;
+  TextEditingController  textEditingController  = new TextEditingController();
+  String? nameCite ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +16,21 @@ class SearchPage extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding:  EdgeInsets.symmetric(horizontal: 16),
+          child: TextField(
+          onSubmitted: (val){
+            print(val);
+            nameCite = val;
+          },
+            controller:textEditingController ,
+            decoration: InputDecoration(
+             suffixIcon: Icon(Icons.search),
+                 hintText: 'Enter a city name',
+                 border: OutlineInputBorder(),
+                contentPadding: EdgeInsetsDirectional.symmetric(vertical: 25,horizontal: 20),
+            ),
+
+          ),
 
         ),
       ),
