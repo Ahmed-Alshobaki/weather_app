@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 
 import '../models/weather_model.dart';
+import '../services/weatherServicse.dart';
 
 
 class SearchPage extends StatelessWidget {
@@ -19,8 +20,7 @@ class SearchPage extends StatelessWidget {
           padding:  EdgeInsets.symmetric(horizontal: 16),
           child: TextField(
           onSubmitted: (val){
-            print(val);
-            nameCite = val;
+            WeatherServicse.getdataweather(name: val);
           },
             controller:textEditingController ,
             decoration: InputDecoration(
