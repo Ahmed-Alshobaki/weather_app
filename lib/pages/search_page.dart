@@ -9,6 +9,9 @@ import '../services/weatherServicse.dart';
 class SearchPage extends StatelessWidget {
   TextEditingController  textEditingController  = new TextEditingController();
   String? nameCite ;
+  SearchPage({required void updateUi,});
+  VoidCallback? updateUi;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +22,11 @@ class SearchPage extends StatelessWidget {
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 16),
           child: TextField(
-          onSubmitted: (val){
-            WeatherServicse.getdataweather(name: val);
+          onSubmitted: (val)async{
+           WeatherModel  weatherModel= await WeatherServicse.getdataweather(name: val);
+           weatherData =weatherModel;
+          Navigator.of(context).pop();
+           updateUi!();
           },
             controller:textEditingController ,
             decoration: InputDecoration(
@@ -38,3 +44,4 @@ class SearchPage extends StatelessWidget {
   }
 }
 
+WeatherModel? weatherData;

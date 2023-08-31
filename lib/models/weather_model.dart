@@ -16,7 +16,6 @@ class WeatherModel {
 
   factory WeatherModel.fromJson(dynamic data) {
     var jsonData = data['forecast']['forecastday'][0]['day'];
-
     return WeatherModel(
         date: DateTime.parse( data['current']['last_updated']),
         temp: jsonData['avgtemp_c'],
