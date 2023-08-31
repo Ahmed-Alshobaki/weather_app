@@ -9,13 +9,14 @@ class WeatherModel {
 
   WeatherModel(
       {required this.date,
-      required this.temp,
-      required this.maxTemp,
-      required this.minTemp,
-      required this.weatherStateName});
+        required this.temp,
+        required this.maxTemp,
+        required this.minTemp,
+        required this.weatherStateName});
 
   factory WeatherModel.fromJson(dynamic data) {
     var jsonData = data['forecast']['forecastday'][0]['day'];
+
     return WeatherModel(
         date: DateTime.parse( data['current']['last_updated']),
         temp: jsonData['avgtemp_c'],
@@ -29,12 +30,12 @@ class WeatherModel {
     return 'tem = $temp  minTemp = $minTemp  date = $date';
   }
 
-   String getImage() {
+  String getImage() {
     if (weatherStateName == 'Sunny' || weatherStateName == 'Clear' ||  weatherStateName == 'partly cloudy') {
       return 'assets/images/clear.png';
     } else if (
-        
-        weatherStateName == 'Blizzard' ||  weatherStateName == 'Patchy snow possible'  ||  weatherStateName == 'Patchy sleet possible' || weatherStateName == 'Patchy freezing drizzle possible' || weatherStateName == 'Blowing snow') {
+
+    weatherStateName == 'Blizzard' ||  weatherStateName == 'Patchy snow possible'  ||  weatherStateName == 'Patchy sleet possible' || weatherStateName == 'Patchy freezing drizzle possible' || weatherStateName == 'Blowing snow') {
       return 'assets/images/snow.png';
     } else if (weatherStateName == 'Freezing fog' || weatherStateName == 'Fog' ||  weatherStateName == 'Heavy Cloud' || weatherStateName == 'Mist' || weatherStateName == 'Fog') {
       return 'assets/images/cloudy.png';
@@ -48,12 +49,12 @@ class WeatherModel {
       return 'assets/images/clear.png';
     }
   }
-MaterialColor getThemeColor() {
+  MaterialColor getThemeColor() {
     if (weatherStateName == 'Sunny' || weatherStateName == 'Clear' ||  weatherStateName == 'partly cloudy') {
       return Colors.orange;
     } else if (
-        
-        weatherStateName == 'Blizzard' ||  weatherStateName == 'Patchy snow possible'  ||  weatherStateName == 'Patchy sleet possible' || weatherStateName == 'Patchy freezing drizzle possible' || weatherStateName == 'Blowing snow') {
+
+    weatherStateName == 'Blizzard' ||  weatherStateName == 'Patchy snow possible'  ||  weatherStateName == 'Patchy sleet possible' || weatherStateName == 'Patchy freezing drizzle possible' || weatherStateName == 'Blowing snow') {
       return Colors.blue;
     } else if (weatherStateName == 'Freezing fog' || weatherStateName == 'Fog' ||  weatherStateName == 'Heavy Cloud' || weatherStateName == 'Mist' || weatherStateName == 'Fog') {
       return Colors.blueGrey;
@@ -68,5 +69,5 @@ MaterialColor getThemeColor() {
     }
   }
 
-  
+
 }

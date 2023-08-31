@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
+import '../Provider/WeatherProvider.dart';
 import '../models/weather_model.dart';
 import '../services/weatherServicse.dart';
 
-
 class SearchPage extends StatelessWidget {
-  TextEditingController  textEditingController  = new TextEditingController();
-  String? nameCite ;
-  SearchPage({required void updateUi,});
+  String? cityName;
+  SearchPage({this.updateUi});
   VoidCallback? updateUi;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,28 +18,50 @@ class SearchPage extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: TextField(
-          onSubmitted: (val)async{
-           WeatherModel  weatherModel= await WeatherServicse.getdataweather(name: val);
-           weatherData =weatherModel;
-          Navigator.of(context).pop();
-           updateUi!();
-          },
-            controller:textEditingController ,
+            onChanged: (data)
+            {
+              cityName = data;
+            },
+            onSubmitted: (data) async {
+              cityName = data;
+
+              WeatherService service = WeatherService();
+
+              WeatherModel? weather =
+              await service.getWeather(cityName: cityName!);
+
+              Provider.of<WeatherProvider>(context,listen: false).weatherData = weather;
+              Provider.of<WeatherProvider>(context,listen: false).cityName = cityName;
+
+              Navigator.pop(context);
+            },
             decoration: InputDecoration(
-             suffixIcon: Icon(Icons.search),
-                 hintText: 'Enter a city name',
-                 border: OutlineInputBorder(),
-                contentPadding: EdgeInsetsDirectional.symmetric(vertical: 25,horizontal: 20),
+              contentPadding:
+              EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+              label: Text('search'),
+              suffixIcon: GestureDetector(
+
+                  onTap : () async
+                  {
+                    WeatherService service = WeatherService();
+
+                    WeatherModel? weather =
+                    await service.getWeather(cityName: cityName!);
+
+                    Provider.of<WeatherProvider>(context,listen: false).weatherData = weather;
+                    Provider.of<WeatherProvider>(context,listen: false).cityName = cityName;
+
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.search)),
+              border: OutlineInputBorder(),
+              hintText: 'Enter a city',
             ),
-
           ),
-
         ),
       ),
     );
   }
 }
-
-WeatherModel? weatherData;
