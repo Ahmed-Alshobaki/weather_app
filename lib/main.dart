@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/pages/home_page.dart';
+import 'package:untitled/services/weatherServicse.dart';
 
 import 'Provider/WeatherProvider.dart';
+import 'cubit/cubitWeather.dart';
 
 
 void main() {
-  runApp(ChangeNotifierProvider(
+  runApp(BlocProvider(
       create: (context) {
-        return WeatherProvider();
+        return cubitWeather(WeatherService());
       },
       child: WeatherApp()));
 }
@@ -18,9 +21,9 @@ class WeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Provider.of<WeatherProvider>(context).weatherData == null ?  Colors.blue : Provider.of<WeatherProvider>(context).weatherData!.getThemeColor()  ,
+        primarySwatch: BlocProvider.of<cubitWeather>(context).weatherModel == null ?  Colors.blue : BlocProvider.of<cubitWeather>(context).weatherModel!.getThemeColor()  ,
       ),
-      home: HomePage(),
+      home: Home(),
     );
   }
 }
